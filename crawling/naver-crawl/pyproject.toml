@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "naver-crawl"
+version = "0.1.0"
+description = ""
+authors = ["Saron Kim <kasrlmoojoo@gmail.com>"]
+readme = "README.md"
+packages = [{include = "naver_crawl"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pandas = "^1.4.4"
+requests = "^2.28.1"
+Scrapy = "^2.6.2"
+fake-useragent = "^0.1.11"
+
+
+[tool.poetry.group.dev.dependencies]
+jupyter = "^1.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
