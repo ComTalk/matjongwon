@@ -19,10 +19,27 @@
 
 <script>
 import StoreCard from "../components/StoreCard";
+import placeService from "../service/place/placeService";
 
 export default {
   components: {
     StoreCard,
+  },
+  methods: {
+    async fetchPlaceList() {
+        console.log("test1");
+        try{
+            this.stores = await placeService.fetchPlaceList();
+        } catch(e) {
+            alert(e);
+        }
+    },
+  },
+  mounted() {
+    this.fetchPlaceList()
+        .then(() => {
+                console.log("Test");
+        });
   },
   data() {
     return {
