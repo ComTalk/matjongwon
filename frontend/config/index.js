@@ -5,21 +5,12 @@
 const path = require('path')
 
 module.exports = {
-  devServer: {
-    proxy: {
-      '/v1' : {
-        target: 'http://localhost:8000',
-        changeOrigin: true
-      }
-    }
-  },
   dev: {
 
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
-    proxy: {
+    proxyTable: {
       '/v1' : {
         target: 'http://localhost:8000',
         changeOrigin: true
