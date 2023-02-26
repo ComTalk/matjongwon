@@ -40,12 +40,12 @@ export default {
     category: {type: Array},
     description: {type: String},
     address: {type: String},
-    openingHours: {type: String},
+    openingHours: {type: Array},
     score: {type: Object},
     menu: {type: String},
     thumbnails: {type: Array},
     url: {type: String},
-    reviews: {type: String},
+    reviews: {type: Object},
   },
   computed: {
     getCategoryName() {
