@@ -11,9 +11,11 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import AxiosPlugin from 'vue-axios-cors';
 
-axios.defaults.baseURL = process.env.VUE_API_HOST;
-
 Vue.use(AxiosPlugin);
+
+axios.defaults.baseURL = process.env.VUE_API_HOST;
+axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
 Vue.config.productionTip = false
 
