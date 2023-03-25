@@ -100,6 +100,9 @@ export default {
           that.closeAllWindows();
           marker.setImage(that.markerOnImage);
           that.infowindows[i].open(kakaomap, marker);
+
+          // 부모 컴포넌트에 클릭된 상점 정보 전달
+          that.$emit('clickMarker', that.stores[i]);
         });
       });
     },
