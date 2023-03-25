@@ -8,6 +8,10 @@ import store from './store';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+import AxiosPlugin from 'vue-axios-cors';
+
+Vue.use(AxiosPlugin);
+
 Vue.config.productionTip = false
 
 Vue.use(BootstrapVue)
