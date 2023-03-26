@@ -127,8 +127,11 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDENTIALS = True
-# CORS_ORIGIN_WHITELIST = (
-#     "http://matjongwon.com"
-# )
+CORS_ALLOW_ALL_ORIGINS = False
+#CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOWED_ORIGINS = [
+        'http://localhost:8000',
+        'http://api.matjongwon.com',
+        'http://matjongwon.com'
+]
