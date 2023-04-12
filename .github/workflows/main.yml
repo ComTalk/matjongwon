@@ -33,4 +33,4 @@ jobs:
       - name: Deploy to GCP instance
         run: |
           gcloud config set project ${{ secrets.PROJECT_ID }}
-          gcloud compute scp --recurse --compress --zone $GCE_INSTANCE_ZONE ${{ github.workspace }} $GCE_INSTANCE:/home/matjongwon/git/
+          gcloud compute scp --recurse --compress --zone $GCE_INSTANCE_ZONE ${{ github.workspace }} $GCE_INSTANCE:/home/comtalk/git/
