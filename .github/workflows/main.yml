@@ -33,6 +33,6 @@ jobs:
       - name: Deploy to GCP instance
         run: |
           gcloud config set project ${{ secrets.PROJECT_ID }}
-          gcloud compute scp --recurse --compress --zone $GCE_INSTANCE_ZONE --scp-flag="-i /home/runner/.ssh/google_compute_engine" --scp-flag="-o User=comtalk" ${{ github.workspace }} $GCE_INSTANCE:/home/comtalk/git/
+          gcloud compute scp --recurse --compress --zone $GCE_INSTANCE_ZONE --scp-flag="-i /home/runner/.ssh/google_compute_engine" --scp-flag="-o User=matjongwon" ${{ github.workspace }} $GCE_INSTANCE:/home/comtalk/git/
 
 
