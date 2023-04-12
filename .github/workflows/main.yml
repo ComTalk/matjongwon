@@ -33,6 +33,6 @@ jobs:
 
       - name: Deploy to GCP instance
         run: |
-          gcloud auth login
+          gcloud auth login --no-launch-browser
           gcloud config set project ${{ secrets.PROJECT_ID }}
           gcloud compute scp --recurse --compress --zone $GCE_INSTANCE_ZONE ${{ github.workspace }}/matjongwon $GCE_INSTANCE:/home/comtalk/git/matjongwon
