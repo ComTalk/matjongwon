@@ -15,14 +15,13 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Authenticate with GCP
-        uses: google-github-actions/setup-gcloud@v1
+      - uses: actions/checkout@v3
+      
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
         with:
-          project_id: ${{ secrets.PROJECT_ID }}
-          service_account_email: ${{ secrets.GCP_SA_EMAIL }}
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
 
       - name: Install gcloud
         run: |
@@ -33,6 +32,5 @@ jobs:
 
       - name: Deploy to GCP instance
         run: |
-          gcloud auth login --no-launch-browser
           gcloud config set project ${{ secrets.PROJECT_ID }}
           gcloud compute scp --recurse --compress --zone $GCE_INSTANCE_ZONE ${{ github.workspace }}/matjongwon $GCE_INSTANCE:/home/comtalk/git/matjongwon
