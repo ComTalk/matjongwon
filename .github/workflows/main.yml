@@ -17,7 +17,10 @@ name: Build and Deploy to Google Compute Engine
 on:
   push:
     branches:
-      - master
+      - main
+  pull_request:
+    branches:
+      - main
 
 env:
   PROJECT_ID: ${{ secrets.PROJECT_ID }}
