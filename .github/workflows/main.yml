@@ -1,0 +1,37 @@
+name: deploy GCP instance
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+env:
+  GCE_INSTANCE: server # TODO: update to instance name
+  GCE_INSTANCE_ZONE: asia-northeast3-a # TODO: update to instance zone
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Authenticate with GCP
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ secrets.PROJECT_ID }}
+          service_account_email: ${{ secrets.GCP_SA_EMAIL }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
+      - name: Install gcloud
+        run: |
+          sudo apt-get install apt-transport-https ca-certificates gnupg
+          curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+          echo "deb https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+          sudo apt-get update && sudo apt-get install google-cloud-sdk
+
+      - name: Deploy to GCP instance
+        run: |
+          gcloud compute scp --recurse --compress --zone $GCE_INSTANCE_ZONE ${{ github.workspace }}/matjongwon $GCE_INSTANCE:/home/comtalk/git/matjongwon
