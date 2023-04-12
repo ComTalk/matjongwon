@@ -33,6 +33,6 @@ jobs:
 
       - name: Deploy to GCP instance
         run: |
-          # gcloud auth activate-service-account ${{ secrets.GCP_SA_EMAIL }} --key-file=client-secret.json
+          gcloud auth activate-service-account ${{ secrets.GCP_SA_EMAIL }}
           gcloud config set project ${{ secrets.PROJECT_ID }}
           gcloud compute scp --recurse --compress --zone $GCE_INSTANCE_ZONE ${{ github.workspace }}/matjongwon $GCE_INSTANCE:/home/comtalk/git/matjongwon
