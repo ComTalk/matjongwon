@@ -30,11 +30,8 @@ jobs:
           echo "deb https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
           sudo apt-get update && sudo apt-get install google-cloud-sdk
 
-      - name: Deploy to GCP instance
+      - name: Deploy to GCP instance and remove JSON credential files
         run: |
           gcloud config set project ${{ secrets.PROJECT_ID }}
           gcloud compute scp --recurse --compress --zone $GCE_INSTANCE_ZONE ${{ github.workspace }} $GCE_INSTANCE:/home/comtalk/git/
-          
-      - name: Remove JSON credential files
-        run: |
-          rm -f gha-creds-*.json
+          gcloud compute ssh $GCE_INSTANCE --zone $GCE_INSTANCE_ZONE --command 'find /home/comtalk/git/matjongwon -type f -name "gha-creds-*.json" -exec rm -f {} \;'
