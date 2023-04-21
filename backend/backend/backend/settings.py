@@ -29,7 +29,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'v1.apps.V1Config',
+    'places.apps.PlacesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -83,6 +83,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 
 DATABASES = secrets.DATABASES
+DATABASE_ROUTERS = ['backend.routers.PlaceRouter']
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
