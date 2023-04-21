@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from v1.models import Place
+from Places.models import Place
 import json
 import os
 
