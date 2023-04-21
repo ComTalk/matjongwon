@@ -20,5 +20,5 @@ class Place(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'gangnam'
+        db_table = 'seoul'
         unique_together = (('name', 'coordinates_latitude', 'coordinates_longitude'),)

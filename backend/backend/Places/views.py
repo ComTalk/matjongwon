@@ -12,14 +12,18 @@ def validate_coordinates(coord):
         float(coord)
     except ValueError:
         raise ValidationError("Invalid coordinate value.")
-    
+
+def validate_coordinates_bound(sw_x, sw_y, ne_x, ne_y):
+    if sw_x > ne_x or sw_y > ne_y:
+        raise ValidationError("Invalid coordinate bound. Coordinates for SW must be lower than NE.")
+   
 def place_request(request):
     # Check GET method
     if request.method != 'GET':
         return JsonResponse({"error": "Invalid Request Method"}, status=400)
     
     # Default values
-    query = request.GET.get('query', '강남구')
+    query = request.GET.get('query', '서울')
     page_num = int(request.GET.get('page', 1))
     page_size = int(request.GET.get('size', 10))
     rect = request.GET.get('rect', None)
@@ -27,19 +31,21 @@ def place_request(request):
     # Filter the Place objects by address
     place_objects = Place.objects.filter(Q(address__icontains=query))
     # Filter retaurants within the map area
+    # Coordinates (x, y) = (longitude, latitude)
     if rect:
-        sw_lat, sw_lon, ne_lat, ne_lon = rect.split(',')
+        sw_x, sw_y, ne_x, ne_y = rect.split(',')
 
-        validate_coordinates(sw_lat)
-        validate_coordinates(sw_lon)
-        validate_coordinates(ne_lat)
-        validate_coordinates(ne_lon)
+        validate_coordinates(sw_x)
+        validate_coordinates(sw_y)
+        validate_coordinates(ne_x)
+        validate_coordinates(ne_y)
+        validate_coordinates_bound(sw_x, sw_y, ne_x, ne_y)
 
         place_objects = place_objects.filter(
-            Q(latitude__gte=sw_lat) &
-            Q(latitude__lte=ne_lat) &
-            Q(longitude__gte=sw_lon) &
-            Q(longitude__lte=ne_lon)
+            Q(coordinates_longitude__gte=sw_x) &
+            Q(coordinates_longitude__lte=ne_x) &
+            Q(coordinates_latitude__gte=sw_y) &
+            Q(coordinates_latitude__lte=ne_y)            
         )
 
     # Caclulate metadata
