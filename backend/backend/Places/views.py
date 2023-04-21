@@ -13,31 +13,42 @@ def validate_coordinates(coord):
     except ValueError:
         raise ValidationError("Invalid coordinate value.")
     
-def placeRequest(request):
-    # Initialize params
-    
+def place_request(request):
+    # Check GET method
     if request.method != 'GET':
         return JsonResponse({"error": "Invalid Request Method"}, status=400)
     
+    # Default values
     query = request.GET.get('query', '강남구')
     page_num = int(request.GET.get('page', 1))
     page_size = int(request.GET.get('size', 10))
     rect = request.GET.get('rect', None)
 
-    # Filer the Place objects by address
+    # Filter the Place objects by address
     place_objects = Place.objects.filter(Q(address__icontains=query))
-
-    # filter retaurants within the map area
+    # Filter retaurants within the map area
     if rect:
-        ma
+        sw_lat, sw_lon, ne_lat, ne_lon = rect.split(',')
+
+        validate_coordinates(sw_lat)
+        validate_coordinates(sw_lon)
+        validate_coordinates(ne_lat)
+        validate_coordinates(ne_lon)
+
+        place_objects = place_objects.filter(
+            Q(latitude__gte=sw_lat) &
+            Q(latitude__lte=ne_lat) &
+            Q(longitude__gte=sw_lon) &
+            Q(longitude__lte=ne_lon)
+        )
 
     # Caclulate metadata
     total_count = place_objects.count()
-    isLastPage = ((total_count // page_size) + 1) == page_num
+    is_last_page = ((total_count // page_size) + 1) == page_num
     meta = {
         "total_count": total_count, 
         "count": page_size,
-        "is_end": isLastPage
+        "is_end": is_last_page
     }
 
     # Retrieve a page of objects from the Place model
@@ -52,7 +63,8 @@ def placeRequest(request):
         'documents': documents,
     }
 
-    return JsonResponse(response_data, 
+    return JsonResponse(
+        response_data, 
         safe=False, 
         json_dumps_params={'ensure_ascii': False}, 
         status=200)
