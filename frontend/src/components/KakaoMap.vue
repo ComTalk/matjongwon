@@ -83,8 +83,8 @@ export default {
             let rect = [
               bounds.getSouthWest().getLng(),
               bounds.getSouthWest().getLat(),
-              bounds.getNorthEast().getLat(),
-              bounds.getNorthEast().getLng()
+              bounds.getNorthEast().getLng(),
+              bounds.getNorthEast().getLat()
             ];
             let query = {
               size: 100,
