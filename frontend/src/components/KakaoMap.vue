@@ -22,8 +22,6 @@ export default {
   },
   mounted() {
     window.kakao && window.kakao.maps ? this.initMap() : this.addKakaoMapSdk();
-    this.fetchPlaceList()
-        .then(() => this.redrawMarker);
   },
   methods: {
     initMap() {
@@ -32,12 +30,23 @@ export default {
       const options = {
         center: new kakao.maps.LatLng(37.498095, 127.027610, 16),
         level: 5,
+        maxLevel: 7,
       };
       this.kakaomap = new kakao.maps.Map(container, options);
+      // 지도 클릭 이벤트
       kakao.maps.event.addListener(this.kakaomap, 'click', function() {
         that.closeAllWindows();
       });
+      // 지도 영역 변경 이벤트
+      kakao.maps.event.addListener(this.kakaomap, 'dragend', function() {
+        that.closeAllWindows();
+        that.fetchPlaceList()
+          .then(() => that.redrawMarker);
+      });
       this.createMarkerImage();
+      
+      this.fetchPlaceList()
+          .then(() => this.redrawMarker);
     },
     addKakaoMapSdk() {
       const script = document.createElement("script");
@@ -51,6 +60,8 @@ export default {
         info.close();
         that.markers[i].setImage(that.markerOffImage);
       });
+      // 부모 컴포넌트에 클릭 이벤트 전달
+      that.$emit('clickMap');
     },
     createMarkerImage() {
       const imageOffSrc = require(`@/assets/images/marker_place_off.png`); 
@@ -58,9 +69,29 @@ export default {
       this.markerOffImage = new kakao.maps.MarkerImage(imageOffSrc, new kakao.maps.Size(16, 22));
       this.markerOnImage = new kakao.maps.MarkerImage(imageOnSrc, new kakao.maps.Size(32, 44));
     },
+    markerClickHandler(marker, i) {
+      this.closeAllWindows();
+      marker.setImage(this.markerOnImage);
+      this.infowindows[i].open(this.kakaomap, marker);
+
+      // 부모 컴포넌트에 클릭된 상점 정보 전달
+      this.$emit('clickMarker', this.stores[i]);
+    },
     async fetchPlaceList() {
         try{
-            this.stores = await placeService.fetchPlaceList();
+            let bounds = this.kakaomap.getBounds();
+            let rect = [
+              bounds.getSouthWest().getLng(),
+              bounds.getSouthWest().getLat(),
+              bounds.getNorthEast().getLng(),
+              bounds.getNorthEast().getLat()
+            ];
+            let query = {
+              size: 100,
+              rect: rect.join(',')
+            };
+            this.stores = await placeService.fetchPlaceList(query);
+            this.positions = [];
             this.stores.forEach(store => {
               this.positions.push({
                 title: store.name,
@@ -77,6 +108,16 @@ export default {
       let that = this;
       let kakaomap = this.kakaomap;
 
+      // 지도에서 기존 마커 삭제
+      this.markers.forEach((marker, i) => {
+        marker.setMap(null);
+        kakao.maps.event.addListener(marker, 'click', () => that.markerClickHandler(marker, i));
+      });
+
+      this.markers = [];
+      this.infowindows = [];
+
+      // 좌표기준으로 마커, 인포윈도우 생성
       this.positions.forEach(pos => {
         let marker = new kakao.maps.Marker({
           map: kakaomap,
@@ -96,14 +137,7 @@ export default {
       });
 
       this.markers.forEach((marker, i) => {
-        kakao.maps.event.addListener(marker, 'click', function() {
-          that.closeAllWindows();
-          marker.setImage(that.markerOnImage);
-          that.infowindows[i].open(kakaomap, marker);
-
-          // 부모 컴포넌트에 클릭된 상점 정보 전달
-          that.$emit('clickMarker', that.stores[i]);
-        });
+        kakao.maps.event.addListener(marker, 'click', () => that.markerClickHandler(marker, i));
       });
     },
   }
