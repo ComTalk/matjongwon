@@ -6,8 +6,12 @@
       <b-navbar-brand href="/">맛종원</b-navbar-brand>
 
       <b-navbar-nav class="ml-auto w-50">
-        <b-nav-form class="mw-100">
-          <b-form-input class="mw-100" placeholder="검색"></b-form-input>
+        <b-nav-form class="mw-100" @submit.prevent="">
+          <b-form-input class="mw-100" 
+                        placeholder="검색" 
+                        v-model="keyword"
+                        @keydown="inputKeyDown">
+          </b-form-input>
         </b-nav-form>
       </b-navbar-nav>
       
@@ -33,16 +37,26 @@
 import {mapMutations, mapState} from 'vuex';
 
 export default {
+  data() {
+    return {
+      keyword: ""
+    }
+  },
   computed: {
     ...mapState(['gnb']),
   },
-
   methods: {
-    ...mapMutations(['setGnb']),
+    ...mapMutations(['setGnb', 'setPlaceQuery']),
 
     clickGnb(gnb) {
       this.setGnb(gnb);
-    }
+    },
+
+    inputKeyDown(e) {
+      if (e.which === 13 || e.keyCode === 13) { // 엔터 키 입력시 검색 처리
+        this.setPlaceQuery(this.keyword);
+      }
+    },
   },
 };
 </script>
