@@ -7,6 +7,7 @@ export default new Vuex.Store({
   // 글로벌 영역 상태값.
   state: {
      gnb: '', // 선택중인 GNB
+     placeQuery: '', // 상단 검색창 검색어
   },
 
   mutations: {
@@ -19,5 +20,9 @@ export default new Vuex.Store({
     setGnb(state, id) {
       state.gnb = id;
     },
+
+    setPlaceQuery(state, placeQuery) {
+      state.placeQuery = placeQuery;
+    }
   }
 });
