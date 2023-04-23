@@ -4,6 +4,7 @@
 
 <script>
 
+import {mapState} from 'vuex';
 import placeService from "../service/place/placeService";
 
 // https://goodteacher.tistory.com/432
@@ -17,11 +18,25 @@ export default {
       markers: [],
       infowindows: [],
       markerOnImage: null,
-      markerOffImage: null
+      markerOffImage: null,
+      query: "",
     };
   },
+  computed: {
+    ...mapState(['placeQuery']),
+  },
   mounted() {
+    let that = this;
     window.kakao && window.kakao.maps ? this.initMap() : this.addKakaoMapSdk();
+    
+    // 상단 검색창 입력값 변경 감시
+    this.$store.subscribe((mutation, state) => {
+      if (mutation.type === 'setPlaceQuery') {
+        that.query = mutation.payload;
+        that.fetchPlaceList()
+          .then(() => that.redrawMarker);
+      }
+    })
   },
   methods: {
     initMap() {
@@ -87,6 +102,7 @@ export default {
               bounds.getNorthEast().getLat()
             ];
             let query = {
+              query: this.query,
               size: 100,
               rect: rect.join(',')
             };

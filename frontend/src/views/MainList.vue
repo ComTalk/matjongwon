@@ -20,7 +20,7 @@
         >
         </StoreCard>
     </b-card-group>
-    <infinite-loading @infinite="infiniteHandler">
+    <infinite-loading @infinite="infiniteHandler" :identifier="infiniteId">
       <div slot="no-more"></div>
     </infinite-loading>
   </div>
@@ -40,18 +40,37 @@ export default {
     return {
       stores: [],
       page: 1,
+      query: "",
+      infiniteId: +new Date(),
     };
   },
+  mounted() {
+    let that = this;
+    // 상단 검색창 입력값 변경 감시
+    this.$store.subscribe((mutation, state) => {
+      if (mutation.type === 'setPlaceQuery') {
+        that.query = mutation.payload;
+        that.stores = [];
+        that.page = 1;
+        that.infiniteId += 1;
+      }
+    });
+  },
   methods: {
-    async fetchPlaceList(page) {
+    async fetchPlaceList() {
       try{
-        return await placeService.fetchPlaceList({page});
+        let query = {
+          query: this.query,
+          page: this.page
+        }
+        return await placeService.fetchPlaceList(query);
       } catch(e) {
         alert(e);
       }
     },
     async infiniteHandler($state) {
-      let placeList = await this.fetchPlaceList(this.page);
+      console.log("test");
+      let placeList = await this.fetchPlaceList();
       if (placeList.length) {
         this.page++;
         this.stores.push(...placeList);
