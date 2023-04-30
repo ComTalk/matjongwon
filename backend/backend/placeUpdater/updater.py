@@ -1,4 +1,4 @@
-from v1.models import Place
+from places.models import Place
 
 def update_places():
     json =  _get_place_json()
