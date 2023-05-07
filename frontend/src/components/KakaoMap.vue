@@ -12,6 +12,7 @@ export default {
   name: "KakaoMap",
   data() {
     return {
+      curPosition: null,
       kakaomap: null,
       stores: [],
       positions: [],
@@ -27,7 +28,7 @@ export default {
   },
   mounted() {
     let that = this;
-    window.kakao && window.kakao.maps ? this.initMap() : this.addKakaoMapSdk();
+    navigator.geolocation.getCurrentPosition(this.loadCurrentPosSuccess, this.loadKakaoMap);
     
     // 상단 검색창 입력값 변경 감시
     this.$store.subscribe((mutation, state) => {
@@ -39,11 +40,20 @@ export default {
     })
   },
   methods: {
+    loadCurrentPosSuccess(position) {
+      this.curPosition = position;
+      this.loadKakaoMap();
+    },
+    loadKakaoMap() {
+      window.kakao && window.kakao.maps ? this.initMap() : this.addKakaoMapSdk();
+    },
     initMap() {
       let that = this;
       const container = document.getElementById("kakaomap");
+      const initLat = this.curPosition ? this.curPosition.coords.latitude : 37.498095;
+      const initLng = this.curPosition ? this.curPosition.coords.longitude : 127.027610;
       const options = {
-        center: new kakao.maps.LatLng(37.498095, 127.027610, 16),
+        center: new kakao.maps.LatLng(initLat, initLng, 16),
         level: 5,
         maxLevel: 7,
       };
@@ -101,6 +111,7 @@ export default {
               bounds.getNorthEast().getLng(),
               bounds.getNorthEast().getLat()
             ];
+
             let query = {
               query: this.query,
               size: 100,
