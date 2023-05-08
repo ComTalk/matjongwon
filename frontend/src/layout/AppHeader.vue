@@ -18,6 +18,7 @@
       <b-nav pills class="ml-auto">
         <b-nav-item size="sm" :active="gnb === 'map'"  @click="clickGnb('map')" href="/">지도</b-nav-item>
         <b-nav-item size="sm" :active="gnb === 'list'" @click="clickGnb('list')" href="/list">목록</b-nav-item>
+        <b-nav-item size="sm" :active="gnb === 'login'" @click="clickGnb('login')" href="/login">로그인</b-nav-item>
       </b-nav>
 
       <!--b-navbar-nav class="ml-auto">
