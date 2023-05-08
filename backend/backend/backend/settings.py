@@ -24,7 +24,7 @@ SECRET_KEY = secrets.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['api.matjongwon.com', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -131,6 +131,8 @@ CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ALLOWED_ORIGINS = [
         'http://localhost:8000',
+        'http://localhost:8080',
         'http://api.matjongwon.com',
-        'http://matjongwon.com'
+        'http://matjongwon.com',
+        "http://localhost:3000"
 ]
