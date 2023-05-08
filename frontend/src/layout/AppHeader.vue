@@ -20,9 +20,9 @@
             <p>
               로그인을 하시면 원하는 식당을 저장할 수 있어요. 
             </p>
-            <img src="../assets/images/naver_logo.png" width="60px"></img>
-            <img src="../assets/images/kakao_logo.png" width="60px"></img>
-            <img src="../assets/images/google_logo.png" width="60px"></img>
+            <img src="../assets/images/naver_logo.png" width="60px"/>
+            <img src="../assets/images/kakao_logo.png" width="60px" @click="kakaoLogin()"/>
+            <img src="../assets/images/google_logo.png" width="60px"/>
           </div>
         </b-sidebar>
       </b-nav>
@@ -50,6 +50,13 @@ export default {
 
     clickGnb(gnb) {
       this.setGnb(gnb);
+    },
+
+    kakaoLogin() {
+      const params = {
+        redirectUri: "http://localhost:8080/oauth/kakao/callback"
+      };
+      Kakao.Auth.authorize(params);
     },
 
     inputKeyDown(e) {
