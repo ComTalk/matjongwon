@@ -18,6 +18,8 @@ axios.defaults.baseURL = process.env.VUE_API_HOST;
 Vue.config.productionTip = false
 
 Vue.use(BootstrapVue)
+Kakao.init("c5d2f854b236f050858192c2763f47f7");
+
 
 /* eslint-disable no-new */
 new Vue({

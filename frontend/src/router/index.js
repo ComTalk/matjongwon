@@ -4,6 +4,7 @@ import AppHeader from "../layout/AppHeader";
 import AppFooter from "../layout/AppFooter";
 import MainMap from "../views/MainMap.vue";
 import MainList from "../views/MainList.vue";
+import RedirectUri from "../views/RedirectUri.vue";
 
 Vue.use(Router)
 
@@ -27,6 +28,13 @@ export default new Router({
         default: MainList,
         footer: AppFooter
       },
+    },
+    {
+      path: '/oauth/kakao/callback',
+      name: 'RedirectUri',
+      components: {
+        default: RedirectUri
+      }
     }
   ]
 })
