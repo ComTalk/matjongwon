@@ -14,7 +14,7 @@
   export default {
     methods: {
       async loginWithGithub() {
-        const clientId = 'client_id';
+        const clientId = process.env.GITHUB_CLIENT_ID;
         const redirectUri = 'http://localhost:3000/login/callback/github';
         const scope = 'user'; // Request the 'user' scope for the logged-in user's profile information
   
@@ -50,7 +50,7 @@
 
         const profileData = profileResponse.data;
 
-        console.log(profileData)
+        // console.log(profileData)
 
         console.log("ID: " + profileData.id);
         console.log("Full Name: " + profileData.name);

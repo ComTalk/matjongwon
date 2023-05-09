@@ -16,8 +16,8 @@ export default {
         axios
         .post(Uri, { 
             code: code,
-            clientId : 'client_id',
-            clientSecret: 'client_secret',
+            clientId : process.env.GITHUB_CLIENT_ID,
+            clientSecret: process.env.GITHUB_CLIENT_SECRET,
             redirectUri : redirectUri
         })
         .then((response) => {

@@ -11,7 +11,7 @@ export default {
   mounted() {
     this.loadGsiLibrary()
       .then(() => {
-        const gClientId = "client_id";
+        const gClientId = process.env.GOOGLE_CLIENT_ID;
         window.google.accounts.id.initialize({
           client_id: gClientId,
           callback: this.handleCredentialResponse,
