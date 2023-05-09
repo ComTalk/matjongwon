@@ -1,7 +1,6 @@
 <template>
   <div>
     <div ref="googleLoginBtn"></div>
-    <button @click="logout">Logout</button>
   </div>
 </template>
 
@@ -10,7 +9,6 @@ import jwtDecode from "jwt-decode";
 
 export default {
   mounted() {
-    if (!sessionStorage.getItem("idToken")) {
     this.loadGsiLibrary()
       .then(() => {
         const gClientId = "client_id";
@@ -19,7 +17,6 @@ export default {
           callback: this.handleCredentialResponse,
           auto_select: true,
         });
-        google.accounts.id.prompt();
         window.google.accounts.id.renderButton(this.$refs.googleLoginBtn, {
           text: "signin_with",
           size: "large",
@@ -31,7 +28,6 @@ export default {
       .catch((error) => {
         console.error("Failed to load Google Identity Services library", error);
       });
-    }
   },
   methods: {
     async loadGsiLibrary() {
@@ -67,27 +63,7 @@ export default {
       console.log('Family Name: ' + responsePayload.family_name);
       console.log("Image URL: " + responsePayload.picture);
       console.log("Email: " + responsePayload.email);
-    },
-    logout() {
-    if (localStorage.getItem('idToken') || sessionStorage.getItem('idToken')) {
-      localStorage.removeItem('idToken');
-      sessionStorage.removeItem('idToken');
-      
-      // Call a function to reset the application state
-      this.resetAppState();
-
-      console.log("Logged out.");
-    } else {
-      console.log("No ID token found. User is not logged in.");
     }
-  },
-  resetAppState() {
-    // Clear user-specific data (replace this with your own logic)
-    // this.$store.commit('clearUserData');
-
-    // Refresh the current page
-    window.location.reload();
-  },
   },
 };
 </script>
