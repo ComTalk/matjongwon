@@ -5,6 +5,7 @@ import AppFooter from "../layout/AppFooter";
 import MainMap from "../views/MainMap.vue";
 import MainList from "../views/MainList.vue";
 import Login from "../views/Login.vue";
+import GitHubCallback from "../components/GitHubCallback.vue"; // Import the GitHubCallback component
 
 Vue.use(Router);
 
@@ -37,6 +38,11 @@ export default new Router({
         default: Login,
         footer: AppFooter
       }
+    },
+    {
+      path: "/login/callback/github",
+      name: "GitHubCallback",
+      component: GitHubCallback
     }
   ]
 });
