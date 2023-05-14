@@ -30,8 +30,8 @@ export default new Router({
       },
     },
     {
-      path: '/oauth/kakao/callback',
-      name: 'RedirectUri',
+      path: '/oauth/kakao/userinfo',
+      name: 'UserInfo',
       components: {
         default: RedirectUri
       }

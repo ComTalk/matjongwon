@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -8,6 +9,8 @@ export default new Vuex.Store({
   state: {
      gnb: '', // 선택중인 GNB
      placeQuery: '', // 상단 검색창 검색어
+     stateLogin: false, 
+     user : null
   },
 
   mutations: {
@@ -23,6 +26,28 @@ export default new Vuex.Store({
 
     setPlaceQuery(state, placeQuery) {
       state.placeQuery = placeQuery;
+    },
+
+    setLogin(state, user) {
+      state.stateLogin = true;
+      state.user = user;
+    },
+
+    setLogout(state) {
+      state.stateLogin = false; 
+      state.user = null;
     }
+  },
+  actions : {
+    doLogin({commit}, user) {
+      commit ('setLogin', user);
+    }, 
+    doLogout({commit}) {
+      commit ('setLogout');
+    }
+  },
+  getters : {
+    stateLogin : state => state.stateLogin,
+    user : state => state.user
   }
 });

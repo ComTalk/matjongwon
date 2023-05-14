@@ -12,14 +12,11 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import AxiosPlugin from 'vue-axios-cors';
 
 Vue.use(AxiosPlugin);
-
-axios.defaults.baseURL = process.env.VUE_API_HOST;
-
+Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 
-Vue.use(BootstrapVue)
-Kakao.init("c5d2f854b236f050858192c2763f47f7");
-
+axios.defaults.baseURL = process.env.VUE_API_HOST;
+Kakao.init("c5d2f854b236f050858192c2763f47f7"); // 초기화
 
 /* eslint-disable no-new */
 new Vue({
