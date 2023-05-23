@@ -67,15 +67,7 @@ def place_request(request):
     documents = []
     for place in place_objects:
         place_dict = model_to_dict(place)
-        try:
-            likes = place.likes.users.count()
-        except ObjectDoesNotExist:
-            likes = 0
-        try:
-            dislikes = place.dislikes.users.count()
-        except ObjectDoesNotExist:
-            dislikes = 0
-        place_dict['total_likes'] = likes - dislikes
+        place_dict['total_likes'] = place.get_overall_likes() 
         documents.append(place_dict)
 
     # Build the response

@@ -1,5 +1,6 @@
 from django.db import models
 from users.models import User
+from django.core.exceptions import ObjectDoesNotExist
 
 class Place(models.Model):
     # primary key `id` is specified explicitly
@@ -22,10 +23,19 @@ class Place(models.Model):
     coordinates_longitude = models.FloatField(db_column='coordinates.longitude')  # Field renamed to remove unsuitable characters.
     
     def get_total_likes(self):
-        return self.likes.users.count()
+        try:
+            return self.likes.users.count()
+        except ObjectDoesNotExist:
+            return 0
 
     def get_total_dislikes(self):
-        return self.dislikes.users.count()
+        try:
+            return self.dislikes.users.count()
+        except ObjectDoesNotExist:
+            return 0
+
+    def get_overall_likes(self):
+        return self.get_total_likes() - self.get_total_dislikes()
 
     class Meta:
         managed = False
