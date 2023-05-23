@@ -365,4 +365,4 @@ test = ["pytest (>=4.3)", "pytest-mock (>=3.3)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "0f65efb2e756d1016c3346424b761651f447d861e1c0f4627535f5876030f20e"
+content-hash = "94e84f359faf832b89f4a8925394c1861e074f0d614796c8d47707701e28395f"
