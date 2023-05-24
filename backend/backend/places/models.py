@@ -1,7 +1,11 @@
 from django.db import models
+from users.models import User
+from django.core.exceptions import ObjectDoesNotExist
 
 class Place(models.Model):
-    name = models.CharField(primary_key=True, max_length=64)
+    # primary key `id` is specified explicitly
+    id = models.BigAutoField(primary_key=True)
+    name = models.CharField(max_length=64)
     category = models.TextField(blank=True, null=True)
     address = models.TextField(blank=True, null=True)
     opening_hours = models.TextField(blank=True, null=True)
@@ -17,8 +21,24 @@ class Place(models.Model):
     description = models.TextField(blank=True, null=True)
     coordinates_latitude = models.FloatField(db_column='coordinates.latitude')  # Field renamed to remove unsuitable characters.
     coordinates_longitude = models.FloatField(db_column='coordinates.longitude')  # Field renamed to remove unsuitable characters.
+    
+    def get_total_likes(self):
+        try:
+            return self.likes.users.count()
+        except ObjectDoesNotExist:
+            return 0
+
+    def get_total_dislikes(self):
+        try:
+            return self.dislikes.users.count()
+        except ObjectDoesNotExist:
+            return 0
+
+    def get_overall_likes(self):
+        return self.get_total_likes() - self.get_total_dislikes()
 
     class Meta:
         managed = False
         db_table = 'seoul'
         unique_together = (('name', 'coordinates_latitude', 'coordinates_longitude'),)
+

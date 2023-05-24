@@ -24,12 +24,14 @@ SECRET_KEY = secrets.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = secrets.ALLOWED_HOSTS
 
 # Application definition
 
 INSTALLED_APPS = [
     'places.apps.PlacesConfig',
+    'users',
+    'like',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -83,7 +85,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 
 DATABASES = secrets.DATABASES
-DATABASE_ROUTERS = ['backend.routers.PlaceRouter']
+DATABASE_ROUTERS = ['backend.routers.MatjongwonRouter']
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -129,8 +131,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = False
 #CORS_ALLOW_CREDENTIALS = True
 
-CORS_ALLOWED_ORIGINS = [
-        'http://localhost:8000',
-        'http://api.matjongwon.com',
-        'http://matjongwon.com'
-]
+CORS_ALLOWED_ORIGINS = secrets.CORS_ALLOWED_ORIGINS
