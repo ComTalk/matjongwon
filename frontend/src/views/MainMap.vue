@@ -1,13 +1,17 @@
 <template>
   <div>
-    <KakaoMap @clickMarker="updateStoreCardData"> </KakaoMap>
+    <KakaoMap 
+        @clickMarker="updateStoreCardData"
+        @clickMap="resetCardData"
+    >
+    </KakaoMap>
     <div class="storeCard">
       <StoreSummaryCard v-if="selectedItem != null"
           :name="selectedItem.name"
           :category="selectedItem.category"
           :address="selectedItem.address"
           :openingHours="selectedItem.opening_hours"
-          :score_navermap="selectedItem.score_navermap"
+          :score_navermap="selectedItem.score_navermap" 
           :score_kakaomap="selectedItem.score_kakaomap"
           :score_googlemap="selectedItem.score_googlemap"
           :menu="selectedItem.menu"
@@ -39,6 +43,9 @@ export default {
   methods: {
     updateStoreCardData(item) {
       this.selectedItem = item;
+    },
+    resetCardData() {
+      this.selectedItem = null;
     }
   }
 };
