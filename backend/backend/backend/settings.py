@@ -24,7 +24,7 @@ SECRET_KEY = secret.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = secrets.ALLOWED_HOSTS
+ALLOWED_HOSTS = secret.ALLOWED_HOSTS
 
 # Application definition
 
@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # }
 
 
-DATABASES = secrets.DATABASES
+DATABASES = secret.DATABASES
 DATABASE_ROUTERS = ['backend.routers.MatjongwonRouter']
 
 # Password validation
@@ -131,4 +131,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = False
 #CORS_ALLOW_CREDENTIALS = True
 
-CORS_ALLOWED_ORIGINS = secrets.CORS_ALLOWED_ORIGINS
+CORS_ALLOWED_ORIGINS = secret.CORS_ALLOWED_ORIGINS
