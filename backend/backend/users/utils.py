@@ -1,5 +1,5 @@
 from utils import get_db_handle
-from secrets import DATABASES
+from secret import DATABASES
 
 mongodb = DATABASES['mongodb']['CLIENT']
 
