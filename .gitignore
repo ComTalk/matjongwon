@@ -67,5 +67,5 @@ env.bak/
 venv.bak/
 
 # Private data
-**/secrets.py
+**/secret.py
 
