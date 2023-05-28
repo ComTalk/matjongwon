@@ -14,6 +14,7 @@ class PlaceDocument(Document):
         model = Place # The model associated with this Document
 
         fields = [
+            'id',
             'name',
             'category',
             'address',

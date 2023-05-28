@@ -10,4 +10,4 @@ class PlaceSerializer(serializers.ModelSerializer):
 class PlaceSearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Place
-        fields = ('name', 'category', 'address', 'menu', 'description')
+        fields = ('id', 'name', 'category', 'address', 'menu', 'description')
