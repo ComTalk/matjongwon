@@ -12,7 +12,11 @@
         >
         </b-carousel-slide>
       </b-carousel>
-      <b-card-body :title="name" @click="goUrl">
+      <b-card-body @click="goUrl">
+        <b-card-title>
+          {{ name }}
+          <like-button />
+        </b-card-title>
         <b-card-sub-title>
           {{ category }}
           <b-img :width="20" :height="20" :src="require(`@/assets/images/kakaomap_icon.png`)" v-if="score_kakaomap"></b-img><span>{{ score_kakaomap }}</span>
@@ -25,8 +29,13 @@
 </template>
 
 <script>
+import LikeButton from "./LikeButton.vue"
+
 export default {
   name: "StoreSummaryCard",
+  components: {
+    LikeButton
+  },
   props: {
     name: {type: String},
     category: {type: String},
