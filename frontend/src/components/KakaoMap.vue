@@ -68,6 +68,13 @@ export default {
         that.fetchPlaceList()
           .then(() => that.redrawMarker);
       });
+      // 지도 확대 축소 이벤트
+      kakao.maps.event.addListener(this.kakaomap, 'zoom_changed', function() {
+        that.closeAllWindows();
+        that.fetchPlaceList()
+          .then(() => that.redrawMarker);
+      });
+
       this.createMarkerImage();
       
       this.fetchPlaceList()
