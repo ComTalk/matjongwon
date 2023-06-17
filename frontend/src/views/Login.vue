@@ -43,9 +43,21 @@ export default {
 
 <style scoped>
     .button {
-        list-style: none; width: 400px;
-        margin: 0 !important;
-        position: relative;
-        left: calc(50% - 200px); right: calc(50% - 200px);
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 50px;
+  background-color: white;
+  color: black;
+  border-radius: 2px;
+  border: 2px solid #ccc; /* Set border color to light grey */
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  left: calc(50% - 200px);
+  right: calc(50% - 200px);
+  margin-bottom: 10px;
+}
 </style>

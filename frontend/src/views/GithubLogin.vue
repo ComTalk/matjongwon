@@ -63,10 +63,38 @@
   </script>
   
   <style scoped>
-    .button {
-        list-style: none; width: 400px;
-        margin: 0 !important;
-        position: relative;
-        left: calc(50% - 200px); right: calc(50% - 200px);
-    }
+.login-prompt {
+  display: flex;
+  justify-content: center;
+  
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  height: 50px;
+  background-color: white;
+  color: black;
+  border: 2px solid #ccc; /* Set border color to light grey */
+  border-radius: 2px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  left: calc(50% - 200px);
+  right: calc(50% - 200px);
+  margin-bottom: 10px;
+}
+
+.image {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.button:hover {
+  background-color: #f5f5f5;
+}
 </style>
