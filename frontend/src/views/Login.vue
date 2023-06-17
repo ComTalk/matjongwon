@@ -60,4 +60,9 @@ export default {
   right: calc(50% - 200px);
   margin-bottom: 10px;
 }
+
+.button:hover {
+  background-color: #f5f5f5;
+}
+
 </style>
