@@ -27,7 +27,7 @@ class Search(APIView, PageNumberPagination):
             )
         
             search = self.search_document.search().query(q)
-            response = search.execute()
+            response = search[0:30].execute()
             results = self.paginate_queryset(response, request, view=self)
             serializer = self.place_serializer(results, many=True)
             return self.get_paginated_response(serializer.data)
