@@ -28,7 +28,7 @@
 
 <script>
 import KakaoMap from "../components/KakaoMap";
-import StoreSummaryCard from "../components/StoreSummaryCard.vue";
+import StoreSummaryCard from "../components/StoreSummaryCard";
 
 export default {
   components: {
