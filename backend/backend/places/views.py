@@ -31,7 +31,15 @@ def place_request(request):
     rect = request.GET.get('rect', None)
 
     # Filter the Place objects by address
-    place_objects = Place.objects.filter(Q(address__icontains=query))
+    # place_objects = Place.objects.filter(Q(address__icontains=query))
+    place_objects = Place.objects.filter(
+        Q(name__icontains=query) |
+        Q(category__icontains=query) |
+        Q(address__icontains=query) |
+        Q(menu__icontains=query) |
+        Q(description__icontains=query)
+    )
+
     # Filter retaurants within the map area
     # Coordinates (x, y) = (longitude, latitude)
     if rect:
