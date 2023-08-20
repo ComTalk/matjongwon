@@ -3,6 +3,8 @@ from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from django.db.models import Q
 from django.core.exceptions import ValidationError
+from django.forms.models import model_to_dict
+from django.core.exceptions import ObjectDoesNotExist
 
 from .models import Place
 import json
@@ -29,7 +31,15 @@ def place_request(request):
     rect = request.GET.get('rect', None)
 
     # Filter the Place objects by address
-    place_objects = Place.objects.filter(Q(address__icontains=query))
+    # place_objects = Place.objects.filter(Q(address__icontains=query))
+    place_objects = Place.objects.filter(
+        Q(name__icontains=query) |
+        Q(category__icontains=query) |
+        Q(address__icontains=query) |
+        Q(menu__icontains=query) |
+        Q(description__icontains=query)
+    )
+
     # Filter retaurants within the map area
     # Coordinates (x, y) = (longitude, latitude)
     if rect:
@@ -61,7 +71,12 @@ def place_request(request):
     start_index = (page_num - 1) * page_size
     end_index = start_index + page_size
     place_objects = place_objects[start_index : end_index]
-    documents = list(place_objects.values())
+
+    documents = []
+    for place in place_objects:
+        place_dict = model_to_dict(place)
+        place_dict['total_likes'] = place.get_overall_likes() 
+        documents.append(place_dict)
 
     # Build the response
     response_data = {

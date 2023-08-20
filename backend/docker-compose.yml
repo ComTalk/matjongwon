@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  elasticsearch:
+    container_name: "search"
+    image: elasticsearch:7.17.10
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - "discovery.type=single-node"
+    networks:
+      - elastic
+
+networks:
+  elastic:
+    name: elastic

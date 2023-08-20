@@ -24,19 +24,25 @@ SECRET_KEY = secret.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = secret.ALLOWED_HOSTS
 
 # Application definition
 
 INSTALLED_APPS = [
     'places.apps.PlacesConfig',
+    'users.apps.UsersConfig',
+    'like.apps.LikeConfig',
+    'search',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders'
+    'corsheaders',
+    'rest_framework',
+    'django_elasticsearch_dsl',
+    'django_elasticsearch_dsl_drf',
 ]
 
 MIDDLEWARE = [
@@ -83,7 +89,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 
 DATABASES = secret.DATABASES
-DATABASE_ROUTERS = ['backend.routers.PlaceRouter']
+DATABASE_ROUTERS = ['backend.routers.MatjongwonRouter']
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -129,8 +135,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOW_ALL_ORIGINS = False
 #CORS_ALLOW_CREDENTIALS = True
 
-CORS_ALLOWED_ORIGINS = [
-        'http://localhost:8000',
-        'http://api.matjongwon.com',
-        'http://matjongwon.com'
-]
+CORS_ALLOWED_ORIGINS = secret.CORS_ALLOWED_ORIGINS
+
+REST_FRAMEWORK = {
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    #     ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+}
+
+ELASTICSEARCH_DSL= secret.ELASTICSEARCH_DSL
